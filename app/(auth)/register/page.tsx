@@ -22,7 +22,7 @@ export default function Register() {
               String(f.get("email")),
               String(f.get("password"))
             );
-            router.push("/dashboard/planner");
+            router.push("/planner");
           } catch (x) {
             const code = (x as { code?: string }).code ?? "unknown";
             setErr(code.includes("email-already") ? "Email already in use" : String(code));

@@ -49,7 +49,7 @@ export default function SubjectsPage() {
           </li>
         ))}
       </ul>
-      <p><Link href="/dashboard/planner">← Planner</Link></p>
+      <p><Link href="/planner">← Planner</Link></p>
     </main>
   );
 }

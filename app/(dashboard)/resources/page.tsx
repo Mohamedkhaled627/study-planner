@@ -32,7 +32,7 @@ export default function ResourcesPage() {
       {resources.length === 0 && <p>No resources yet.</p>}
       <h2>Add</h2>
       <ResourceForm subjects={subjects} uid={user.uid} onDone={reload} />
-      <p><Link href="/dashboard/planner">← Planner</Link></p>
+      <p><Link href="/planner">← Planner</Link></p>
     </main>
   );
 }

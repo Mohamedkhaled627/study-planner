@@ -85,9 +85,9 @@ export default function PlannerPage() {
         />
       )}
       <p>
-        <Link href="/dashboard/subjects">Subjects</Link> ·{" "}
-        <Link href="/dashboard/resources">Resources</Link> ·{" "}
-        <Link href="/dashboard/availability">Availability</Link>
+        <Link href="/subjects">Subjects</Link> ·
+<Link href="/resources">Resources</Link> ·
+<Link href="/availability">Availability</Link>
       </p>
     </main>
   );

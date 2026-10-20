@@ -23,7 +23,7 @@ export default function AvailabilityPage() {
     <main style={{ padding: 32 }}>
       <h1>Availability</h1>
       <AvailabilityEditor uid={user.uid} slots={slots} onDone={reload} />
-      <p><Link href="/dashboard/planner">← Planner</Link></p>
+      <p><Link href="/planner">← Planner</Link></p>
     </main>
   );
 }

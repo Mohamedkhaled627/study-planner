@@ -22,7 +22,7 @@ export default function Login() {
               String(f.get("email")),
               String(f.get("password"))
             );
-            router.push("/dashboard/planner");
+            router.push("/planner");
           } catch {
             setErr("Bad credentials");
           }
