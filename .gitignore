@@ -3,3 +3,6 @@ node_modules
 .env
 *.tsbuildinfo
 prisma/dev.db
+
+out
+firebase-debug.*
