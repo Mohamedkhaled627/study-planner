@@ -56,7 +56,7 @@ export default function PlannerPage() {
 
   return (
     <main style={{ padding: 32 }}>
-      <h1>Planner</h1>
+      <h1><span className="sp-marked">🗓️ Planner</span></h1>
       <button
         onClick={async () => {
           await generateWeek(user.uid, weekKey(mondayOf(new Date())));

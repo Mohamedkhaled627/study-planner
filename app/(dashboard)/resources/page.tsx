@@ -25,7 +25,7 @@ export default function ResourcesPage() {
 
   return (
     <main style={{ padding: 32 }}>
-      <h1>Resources</h1>
+      <h1>📖 <span className="sp-marked">Resources</span></h1>
       {resources.map((r) => (
         <ResourceCard key={r.id} id={r.id} title={r.title} url={r.url} onDone={reload} />
       ))}

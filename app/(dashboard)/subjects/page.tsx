@@ -29,7 +29,7 @@ export default function SubjectsPage() {
 
   return (
     <main style={{ padding: 32 }}>
-      <h1>Subjects</h1>
+      <h1><span className="sp-marked">📚 Subjects</span></h1>
       <ul>
         {subjects.map((x) => (
           <li key={x.id}>

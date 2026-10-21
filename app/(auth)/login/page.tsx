@@ -10,7 +10,7 @@ export default function Login() {
   const [err, setErr] = useState("");
   return (
     <main style={{ padding: 32, maxWidth: 320 }}>
-      <h1>Login</h1>
+      <h1><span className="sp-marked">🔐 Login</span></h1>
       <form
         onSubmit={async (e) => {
           e.preventDefault();

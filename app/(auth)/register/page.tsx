@@ -10,7 +10,7 @@ export default function Register() {
   const [err, setErr] = useState("");
   return (
     <main style={{ padding: 32, maxWidth: 320 }}>
-      <h1>Register</h1>
+      <h1><span className="sp-marked">🚀 Register</span></h1>
       <form
         onSubmit={async (e) => {
           e.preventDefault();

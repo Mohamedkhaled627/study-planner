@@ -21,7 +21,7 @@ export default function AvailabilityPage() {
 
   return (
     <main style={{ padding: 32 }}>
-      <h1>Availability</h1>
+      <h1>⏰ <span className="sp-marked">Availability</span></h1>
       <AvailabilityEditor uid={user.uid} slots={slots} onDone={reload} />
       <p><Link href="/planner">← Planner</Link></p>
     </main>
