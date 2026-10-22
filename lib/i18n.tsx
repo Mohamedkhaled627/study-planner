@@ -72,14 +72,6 @@ export const DICT: Record<string, { en: string; ar: string }> = {
   "register.emailUsed": { en: "Email already in use", ar: "البريد الإلكتروني مستخدم بالفعل" },
   "register.haveAccount": { en: "Have an account? Login", ar: "لديك حساب؟ سجِّل الدخول" },
 
-  "verify.title": { en: "✅ Verify your email", ar: "✅ تأكيد البريد الإلكتروني" },
-  "verify.body": { en: "To protect your account, we sent a verification link to {email}. Open it, then come back and click Check.", ar: "لحماية حسابك، أرسلنا رابط تأكيد إلى {email}. افتحه ثم عد إلى هنا واضغط «تحقّق»." },
-  "verify.check": { en: "I opened the link — verify me", ar: "فتحت الرابط — تحقّق الآن" },
-  "verify.resent": { en: "Verification email sent ✓", ar: "تم إرسال رابط التأكيد ✓" },
-  "verify.wait": { en: "Try again in a minute.", ar: "حاول مجددًا بعد دقيقة." },
-  "verify.resend": { en: "Resend email", ar: "إعادة الإرسال" },
-  "verify.done": { en: "Verified! Taking you to the planner…", ar: "تم التحقّق! ننقلك إلى المخطط…" },
-
   "subjects.h1": { en: "📚 Subjects", ar: "📚 المواد" },
   "subjects.add": { en: "Add subject", ar: "إضافة مادة" },
   "subjects.namePh": { en: "e.g. OS", ar: "مثال: OS" },
