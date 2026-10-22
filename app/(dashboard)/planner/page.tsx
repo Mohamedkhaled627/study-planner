@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRequireUser } from "@/lib/useRequireUser";
+import { useLang, t } from "@/lib/i18n";
 import { getCurrentWeek, generateWeek } from "@/lib/services";
 import { availabilityRepo, taskRepo, type TaskDoc } from "@/lib/repos";
 import { mondayOf, weekKey } from "@/lib/week";
@@ -13,6 +14,7 @@ type Item = { taskId: string; weekday: number; startMin: number; endMin: number 
 
 export default function PlannerPage() {
   const user = useRequireUser();
+  useLang();
   const [tasks, setTasks] = useState<TaskDoc[]>([]);
   const [items, setItems] = useState<Item[]>([]);
   const [warn, setWarn] = useState("");
@@ -43,40 +45,42 @@ export default function PlannerPage() {
         .filter((x) => x.short > 0);
       setWarn(
         demand > supply && short.length > 0
-          ? `${supply.toFixed(1)}h available, ${demand.toFixed(1)}h demanded — ${short
-              .map((x) => `${x.title} (${(x.short / 60).toFixed(1)}h unscheduled)`)
-              .join(", ")}`
+          ? t("planner.warn", {
+              supply: supply.toFixed(1),
+              demand: demand.toFixed(1),
+              short: short.map((x) => `${x.title} (${(x.short / 60).toFixed(1)}h)`).join(", "),
+            })
           : ""
       );
     })();
   }, [user, tick]);
 
-  if (!user) return <p style={{ padding: 32 }}>Loading…</p>;
+  if (!user) return <p style={{ padding: 32 }}>{t("loading")}</p>;
   const todoTasks = tasks.filter((t) => t.status !== "SKIPPED");
 
   return (
     <main style={{ padding: 32 }}>
-      <h1><span className="sp-marked">🗓️ Planner</span></h1>
+      <h1>{t("planner.h1")}</h1>
       <button
         onClick={async () => {
           await generateWeek(user.uid, weekKey(mondayOf(new Date())));
           reload();
         }}
       >
-        Generate week
+        {t("planner.generate")}
       </button>
-      {warn && <p style={{ color: "orange" }}>{warn}</p>}
-      <h2>TODO ({todoTasks.length})</h2>
+      {warn && <p style={{ color: "orange" }}>⚠️ {warn}</p>}
+      <h2>{t("planner.todo", { n: todoTasks.length })}</h2>
       <ul>
         {todoTasks.map((t) => (
           <li key={t.id}>
-            {t.title} · {t.status} <TaskStatusButtons taskId={t.id} status={t.status} onDone={reload} />
+            {t.title} <TaskStatusButtons taskId={t.id} status={t.status} onDone={reload} />
           </li>
         ))}
       </ul>
-      <h2>Week of {weekKey(mondayOf(new Date()))}</h2>
+      <h2>{t("planner.weekOf", { w: weekKey(mondayOf(new Date())) })}</h2>
       {items.length === 0 ? (
-        <p>No plan yet — click Generate.</p>
+        <p className="sp-muted">{t("planner.noPlan")}</p>
       ) : (
         <PlannerGrid
           items={items}
@@ -85,9 +89,9 @@ export default function PlannerPage() {
         />
       )}
       <p>
-        <Link href="/subjects">Subjects</Link> ·
-<Link href="/resources">Resources</Link> ·
-<Link href="/availability">Availability</Link>
+        <Link href="/subjects">{t("nav.subjects")}</Link> ·{" "}
+        <Link href="/resources">{t("nav.resources")}</Link> ·{" "}
+        <Link href="/availability">{t("nav.availability")}</Link>
       </p>
     </main>
   );

@@ -33,5 +33,10 @@ service cloud.firestore {
       allow read, update, delete: if isOwner();
       allow create: if createsOwned();
     }
+    // email reminders: written by the site, consumed by a scheduled Cloud Function
+    match /mailQueue/{id} {
+      allow read, update, delete: if isOwner();
+      allow create: if createsOwned();
+    }
   }
 }

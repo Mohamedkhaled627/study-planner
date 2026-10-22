@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { DAYS } from "@/lib/week";
 import { availabilityRepo } from "@/lib/repos";
+import { t, useLang } from "@/lib/i18n";
 
 type Seed = { weekday: number; startMin: number; endMin: number };
 
@@ -20,6 +21,7 @@ export default function AvailabilityEditor({
     DAYS.map((_, w) => byDay.get(w) ?? { weekday: w, startMin: 0, endMin: 0 })
   );
   const [err, setErr] = useState("");
+  useLang();
 
   const fmt = (m: number) =>
     m ? `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}` : "";
@@ -47,7 +49,7 @@ export default function AvailabilityEditor({
     >
       {DAYS.map((d, w) => (
         <label key={d}>
-          {d}{" "}
+          {t(`day.${d}`)}{" "}
           <input
             type="time"
             value={fmt(state[w].startMin)}
@@ -69,7 +71,7 @@ export default function AvailabilityEditor({
           />
         </label>
       ))}
-      <button type="submit">Save availability</button>
+      <button type="submit">{t("avail.save")}</button>
       {err && <p style={{ color: "red" }}>{err}</p>}
     </form>
   );

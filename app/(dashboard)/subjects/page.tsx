@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRequireUser } from "@/lib/useRequireUser";
+import { useLang, t } from "@/lib/i18n";
 import { availabilityRepo, subjectRepo, taskRepo, type SubjectDoc, type TaskDoc } from "@/lib/repos";
 import { TaskForm } from "@/components/TaskForm";
 import SubjectForm from "@/components/SubjectForm";
@@ -9,6 +10,7 @@ import Link from "next/link";
 
 export default function SubjectsPage() {
   const user = useRequireUser();
+  useLang();
   const [subjects, setSubjects] = useState<SubjectDoc[]>([]);
   const [tasks, setTasks] = useState<TaskDoc[]>([]);
   const [tick, setTick] = useState(0);
@@ -23,33 +25,36 @@ export default function SubjectsPage() {
     })();
   }, [user, tick]);
 
-  if (!user) return <p style={{ padding: 32 }}>Loading…</p>;
+  if (!user) return <p style={{ padding: 32 }}>{t("loading")}</p>;
   const counts = new Map<string, number>();
-  for (const t of tasks) counts.set(t.subjectId, (counts.get(t.subjectId) ?? 0) + 1);
+  for (const tk of tasks) counts.set(tk.subjectId, (counts.get(tk.subjectId) ?? 0) + 1);
 
   return (
     <main style={{ padding: 32 }}>
-      <h1><span className="sp-marked">📚 Subjects</span></h1>
+      <h1>{t("subjects.h1")}</h1>
       <ul>
         {subjects.map((x) => (
           <li key={x.id}>
-            {x.name} ({counts.get(x.id) ?? 0} tasks){x.examDate ? ` — exam ${x.examDate.slice(0, 10)}` : ""}
+            {x.name} ({t("subjects.tasksCount", { n: counts.get(x.id) ?? 0 })})
+            {x.examDate ? t("subjects.exam", { d: x.examDate.slice(0, 10) }) : ""}
           </li>
         ))}
       </ul>
       <SubjectForm uid={user.uid} onDone={reload} />
-      <h2>Tasks</h2>
+      <h2>{t("subjects.tasksH")}</h2>
       <TaskForm subjects={subjects} uid={user.uid} onDone={reload} />
-      <h3>Your tasks</h3>
+      <h3>{t("subjects.yourTasks")}</h3>
       <ul>
-        {tasks.map((t) => (
-          <li key={t.id}>
-            {t.title} · {t.priority} · {t.status} · {t.estimatedMin}min
-            {t.deadline ? ` · due ${t.deadline.slice(0, 10)}` : ""}
+        {tasks.map((task) => (
+          <li key={task.id}>
+            {task.title} · {t(`pr.${task.priority}`)} · {t(`st.${task.status}`)} ·{" "}
+            {task.estimatedMin}
+            {t("task.min")}
+            {task.deadline ? t("task.due", { d: task.deadline.slice(0, 10) }) : ""}
           </li>
         ))}
       </ul>
-      <p><Link href="/planner">← Planner</Link></p>
+      <p><Link href="/planner">← {t("nav.planner")}</Link></p>
     </main>
   );
 }
