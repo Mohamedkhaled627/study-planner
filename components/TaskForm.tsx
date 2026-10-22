@@ -42,17 +42,19 @@ export function TaskForm({
             createdAt: Date.now(),
           });
           // queue the email reminder for the task's due date (sent by a scheduled Cloud Function)
-          if (deadline && firebaseAuth.currentUser?.email) {
-            await addDoc(collection(db, "mailQueue"), {
-              userId: uid,
-              to: firebaseAuth.currentUser.email,
-              sendAt: new Date(deadline).getTime(),
-              subject: t("mail.subject"),
-              html: `<p>${esc(t("mail.body", { title: esc(title), d: new Date(deadline).toLocaleDateString() }))}</p>`,
-              sent: false,
-              createdAt: Date.now(),
-            });
-          }
+          try {
+            if (deadline && firebaseAuth.currentUser?.email) {
+              await addDoc(collection(db, "mailQueue"), {
+                userId: uid,
+                to: firebaseAuth.currentUser.email,
+                sendAt: new Date(deadline).getTime(),
+                subject: t("mail.subject"),
+                html: `<p>${esc(t("mail.body", { title: esc(title), d: new Date(deadline).toLocaleDateString() }))}</p>`,
+                sent: false,
+                createdAt: Date.now(),
+              });
+            }
+          } catch { /* reminder queuing is best-effort; the task itself was already saved */ }
           beep();
           toast(t("notify.taskAdded"));
           onDone();
